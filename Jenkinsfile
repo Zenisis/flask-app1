@@ -6,7 +6,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage(docker login) {
+        stage('docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'docker_username', passwordVariable: 'docker_password')]) {
                     sh 'echo $docker_password | docker login -u $docker_username --password-stdin'
