@@ -22,6 +22,7 @@ pipeline {
             steps {
                 sh 'docker tag flask-app kartik2311/flask-app:git-${GIT_COMMIT}'
                 sh 'docker push kartik2311/flask-app:git-${GIT_COMMIT}'
+                
             }
         }
         stage('Deploy') {
@@ -29,7 +30,8 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh 'docker run -d -p 5000:5000 flask-app:git-${GIT_COMMIT} '
+                sh 'docker pull kartik2311/flask-app:git-${GIT_COMMIT}'
+                sh 'docker run -d -p 5000:5000 kartik2311/flask-app:git-${GIT_COMMIT}'
             }
         }
     }
