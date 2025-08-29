@@ -21,7 +21,7 @@ pipeline {
         stage('build'){
             steps {
                 sh '''
-                docker build -t ${docker_username}/flask-app:git-${GIT_COMMIT} .
+                docker build -t ${docker_username1}/flask-app:git-${GIT_COMMIT} .
                 echo "Docker Image built successfully"
 
                 '''
