@@ -18,13 +18,25 @@ pipeline {
                 }
             }
         }
-        // stage('Docker Build & Tag') {
-        //     steps {
-        //         script {
-        //             docker.build(DOCKER_IMAGE)
-        //             echo "Docker image built and tagged as ${DOCKER_IMAGE}"
-        //         }
-        //     }
-        // }
+        stage('build'){
+            steps {
+                sh '''
+                docker build -t ${docker_username}/flask-app:git-${GIT_COMMIT} .
+                echo "Docker Image built successfully"
+
+                '''
+            }
+        }
+        stage('tag & push'){
+            steps {
+                sh '''
+                docker tag ${docker_username}/flask-app:git-${GIT_COMMIT} ${docker_username}/flask-app:latest
+                docker push ${docker_username}/flask-app:git-${GIT_COMMIT}
+                echo "Docker Image tagged successfully"
+                echo "Docker Image pushed successfully"
+                '''
+            }
+        }
+
     }
 }
