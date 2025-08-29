@@ -1,38 +1,34 @@
 pipeline {
     agent any
+
+    // environment {
+    //     DOCKER_IMAGE = 'your-image-name:latest'
+    //     DOCKER_REGISTRY = 'your-docker-registry'
+    //     DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id'
+    // }
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('docker login-u') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'docker_username', passwordVariable: 'docker_password')]) {
-                    sh 'echo $docker_password | docker login -u $docker_username --password-stdin'
-                }
-            }
-        }
-        stage('Build') {
-            steps {
-                sh "docker build -t flask-app ."
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'docker tag flask-app kartik2311/flask-app:git-${GIT_COMMIT}'
-                sh 'docker push kartik2311/flask-app:git-${GIT_COMMIT}'
-                
-            }
-        }
-        stage('Deploy') {
-            when {
-                branch 'main'
-            }
-            steps {
-                sh 'docker pull kartik2311/flask-app:git-${GIT_COMMIT}'
-                sh 'docker run -d -p 5000:5000 kartik2311/flask-app:git-${GIT_COMMIT}'
-            }
-        }
+        // stage('Docker Login') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS_ID) {
+        //                 echo 'Logged in to Docker registry'
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('Docker Build & Tag') {
+        //     steps {
+        //         script {
+        //             docker.build(DOCKER_IMAGE)
+        //             echo "Docker image built and tagged as ${DOCKER_IMAGE}"
+        //         }
+        //     }
+        // }
     }
 }
