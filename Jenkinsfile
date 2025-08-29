@@ -34,7 +34,6 @@ pipeline {
                 docker push ${docker_username}/flask-app:git-${GIT_COMMIT}
                 echo "Docker Image tagged successfully"
                 echo "Docker Image pushed successfully"
-                echo "integrated webhook "
                 '''
             }
         }
