@@ -21,7 +21,7 @@ pipeline {
         stage('build'){
             steps {
                 sh '''
-                docker build -t ${username_docker}/flask-app:git-${GIT_COMMIT} .
+                docker build -t flask-app:git-${GIT_COMMIT} .
                 echo "Docker Image built successfully"
 
                 '''
@@ -30,7 +30,7 @@ pipeline {
         stage('tag & push'){
             steps {
                 sh '''
-                docker tag ${docker_username}/flask-app:git-${GIT_COMMIT} ${docker_username}/flask-app:git-${GIT_COMMIT}
+                docker tag flask-app:git-${GIT_COMMIT} ${docker_username}/flask-app:git-${GIT_COMMIT}
                 docker push ${docker_username}/flask-app:git-${GIT_COMMIT}
                 echo "Docker Image tagged successfully"
                 echo "Docker Image pushed successfully"
