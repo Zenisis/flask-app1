@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sh '''
                 docker tag flask-app:git-${GIT_COMMIT} kartik2311/flask-app:git-${GIT_COMMIT}
-                docker push ${docker_username}/flask-app:git-${GIT_COMMIT}
+                docker push kartik2311/flask-app:git-${GIT_COMMIT}
                 echo "Docker Image tagged successfully"
                 echo "Docker Image pushed successfully"
                 '''
