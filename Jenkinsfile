@@ -27,13 +27,13 @@ pipeline {
 
                 '''
             }
-
-        stage (test)
-         when{
+        }
+        stage ('test'){
+          when{
             branch 'master'
 
          }
-           steps{
+         steps{
             sh '''
             docker run -d -p 5000:5000 --name flask-test-container flask-app:git-${GIT_COMMIT}
             sleep 10
@@ -46,7 +46,7 @@ pipeline {
             '''
            }
         }    
-        }
+        
         stage('tag & push'){
             steps {
                 sh '''
@@ -59,5 +59,5 @@ pipeline {
         }
 
     }
-  
+}
     
